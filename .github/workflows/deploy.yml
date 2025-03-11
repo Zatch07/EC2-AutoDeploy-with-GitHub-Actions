@@ -1,0 +1,32 @@
+name: Deploy to EC2
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Checkout the latest code (optional if you are just triggering an update)
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      # Run deployment commands on the EC2 instance via SSH
+      - name: Deploy via SSH
+        uses: appleboy/ssh-action@v0.1.6
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ${{ secrets.EC2_USER }}
+          key: ${{ secrets.EC2_SSH_KEY }}
+          port: ${{ secrets.EC2_PORT || 22 }}
+          script: |
+            cd /home/ubuntu/EC2-AutoDeploy-with-GitHub-Actions
+            # Pull the latest code from GitHub
+            git pull origin main
+            # (Optional) Stop current containers
+            docker-compose down
+            # Build and run the containers in detached mode
+            docker-compose up -d --build
