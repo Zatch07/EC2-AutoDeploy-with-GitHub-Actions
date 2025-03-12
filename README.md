@@ -2,7 +2,7 @@
 # Deploying GitHub Project on AWS EC2 with Docker Compose
 
 This guide provides a step-by-step approach to setting up and running a GitHub project on an AWS EC2 instance
-using Docker Compose.
+using Docker Compose and GitHub Actions.
 
 ---
 
