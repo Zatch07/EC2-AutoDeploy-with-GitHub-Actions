@@ -26,7 +26,7 @@ jobs:
             cd /home/ubuntu/EC2-AutoDeploy-with-GitHub-Actions
             # Pull the latest code from GitHub
             git pull origin main
-            script: |
+            script: 
             # Stop and remove all containers, networks, and volumes defined in docker-compose.yml
             docker-compose down
 
