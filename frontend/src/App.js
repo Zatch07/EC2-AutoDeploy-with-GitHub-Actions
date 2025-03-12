@@ -3,37 +3,33 @@ import axios from "axios";
 import React, { useState, useEffect } from "react";
 
 const URL = "http://localhost:3000";
-
 function App() {
-  const [data, setData] = useState([]); // Initialize data state to store user list
-  const [inputValue, setInputValue] = useState(""); // Initialize input value state
+  const [data, setData] = useState([]);
+  const [inputValue, setInputValue] = useState("");
 
   useEffect(() => {
-    fetchData(); // Fetch data when the component mounts
+    fetchData();
   }, []);
 
-  // Function to fetch data from the server
   const fetchData = async () => {
     try {
       const response = await axios.get(URL + "/user");
       console.log(response.data);
-      setData(response.data); // Update state with fetched data
+      setData(response.data);
     } catch (error) {
       console.error(error);
     }
   };
 
-  // Function to handle input change and update the inputValue state
   const handleChange = (e) => {
-    setInputValue(e.target.value); // Update input value in state
+    setInputValue(e.target.value);
   };
 
-  // Function to post data to the server
   const postData = async () => {
     try {
-      const response = await axios.post(URL + "/user", { name: inputValue }); // Post with user input
+      const response = await axios.post(URL + "/user", { data: inputValue });
       console.log(response.data);
-      fetchData(); // Fetch data again after posting to update the list
+      fetchData(); // Fetch data again after posting
     } catch (error) {
       console.error(error);
     }
@@ -59,17 +55,20 @@ function App() {
 
   return (
     <div className="App">
-      <h1>User Please Submit Form</h1>
-      <input name="input-parameter" onChange={handleChange} /> {/* Input field with change handler */}
+      <h1>User Submit Form</h1>
+      <input name="input-parameter" onChange={handleChange} />
       <br />
       <br />
-      <button onClick={postData}>Submit</button> {/* Button to post input value */}
+      <button onClick={postData}>Submit</button> <br />
+      <br />
+      <button style={{ backgroundColor: "red" }} onClick={dbinit}>
+        DB Init
+      </button>
       <br />
       <br />
-      <button style={{ backgroundColor: "red" }} onClick={dbinit}>DB Init</button> {/* Button to initialize database */}
-      <br />
-      <br />
-      <button style={{ backgroundColor: "orange" }} onClick={tbinit}>Table Init</button> {/* Button to initialize table */}
+      <button style={{ backgroundColor: "orange" }} onClick={tbinit}>
+        Table Init
+      </button>
       <br />
       <hr />
       <h2>Users List</h2>
